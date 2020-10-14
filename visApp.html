@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="lib/d3.js">
+  
+  import {event as currentEvent} from 'lib/d3';
+</script> 
+  <!--<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>-->
+  <script type="text/javascript" src="d3/d3.js"></script>
+
+  <script type="text/javascript" src="lib/gasifier.js"></script>
+  <script type="text/javascript" src="lib/plot.js"></script>
+  <script type="text/javascript" src="lib/periphery.js"></script>
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    html body {
+      position: static;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #1b1a3b;
+    }
+
+    .legend rect {
+      fill: white;
+      stroke: none;
+      opacity: 0.8;
+    }
+
+    #body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #2a2f39;
+    }
+
+    .text {
+
+      fill: #88909f;
+    }
+
+    .axis text {
+
+      fill: #88909f;
+    }
+
+    #div1 {
+      position: absolute;
+      width: 36%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background-color: #323844;
+    }
+
+    #gasifier_Container {
+      position: absolute;
+      width: 80%;
+      height: 85%;
+      left: 10%;
+      top: 15%;
+
+      background-color: #323844;
+    }
+
+    #palette_Container {
+      position: absolute;
+
+      left: 3%;
+      top: 10%;
+
+
+    }
+    #pressurePalette_Container
+   {
+      position: absolute;
+
+      left: 3%;
+      top: 10%;
+
+
+    }
+
+    #div2 {
+      position: absolute;
+      width: 63%;
+      height: 49%;
+      left: 37%;
+      top: 0;
+
+      background-color: #2a2f39;
+    }
+
+    #completion_Container {
+      position: absolute;
+      width: 49%;
+      height: 98%;
+      left: 0%;
+      top: 1%;
+
+      background-color: #323844;
+    }
+
+    #bar_Container {
+      position: absolute;
+      width: 48%;
+      height: 70%;
+      left: 50%;
+      top: 1%;
+
+      background-color: #323844;
+    }
+
+    #Pbar_Container {
+      position: absolute;
+      width: 48%;
+      height: 25%;
+      left: 50%;
+      top: 74%;
+
+      background-color: #323844;
+    }
+
+  
+    #div3 {
+      position: absolute;
+      width: 62%;
+      height: 50%;
+      left: 37%;
+      top: 50%;
+
+      background-color: #2a2f39;
+    }
+
+    #flowNPressure_Container {
+
+      position: absolute;
+      width: 20%;
+      height: 98%;
+      left: 0%;
+      top: 1%;
+
+      background-color: #323844;
+    }
+
+    #linePlot_Container {
+      position: absolute;
+      width: 79%;
+      height: 98%;
+      left: 21%;
+      top: 1%;
+
+      background-color: #323844;
+    }
+
+    #Name {
+      color: #ced2da;
+      font-size: 50px;
+
+      transform: translate(20px, -20px);
+    }
+
+    #button_Mass {
+      position: absolute;
+      top: 195px;
+      left: 6px;
+    }
+    #check_Mass{
+      background-color:teal;
+    }
+
+    #button_AirFlow {
+      position: absolute;
+      top: 46px;
+      left: 6px;
+    }
+    #check_AirFlow{
+      background-color: teal;
+
+    }
+
+    #button_P1 {
+      position: absolute;
+      top: 136px;
+      left: 6px;
+    }
+    #check_P1{
+      background-color:teal;
+    }
+    #button_P2 {
+      position: absolute;
+      top: 226px;
+      left: 6px;
+    }
+    #check_P2{
+      background-color: teal;
+    }
+    #button_PressureDrop {
+      position: absolute;
+      top: 316px;
+      left: 6px;
+    }
+    #check_PressureDrop{
+      background-color: teal;
+    }
+
+    .button{
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: teal;
+    }
+    .button:hover {
+      background-color:  #ced2da;
+    }
+    .check {
+      position: absolute;
+      left:3px;
+      top: 3px;
+      height: 60%;
+      width: 60%;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .airFlow{
+      fill:cyan;
+    }
+    .Mass{
+      fill:#401f1f;
+    }
+   
+
+
+     /*
+    CSS for the Tooltip, shows a dialog message when hovering something with this style
+    From: https://stackoverflow.com/questions/33063374/display-tooltip-close-to-the-mouse-pointer-using-d3-js-in-a-scatter-plot
+    */
+    tip.tooltip {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 3px;
+      font: 14px sans-serif;
+      color: white;
+      background: #242424;
+      pointer-events: none;
+    }
+    /**/
+    .fa{
+      font-size:24px;
+      color:teal
+    }
+    
+   
+    .fa:hover {
+      color:  #ced2da;
+    }
+
+    
+    .clean_buttonContainer {
+      position: absolute;
+      left: 4%;
+      top: 0%;
+    }
+
+    .brush_buttonContainer {
+      position: absolute;
+      left: 10%;
+      top: 0%;
+    }
+  </style>
+
+
+</head>
+
+
+
+<body>
+
+  <div id="body">
+
+    <div id="div1">
+      <p id="Name">GasVis</p>
+      <div id="gasifier_Container"></div>
+      <div id="palette_Container"></div>
+      <div id="pressurePalette_Container"></div>
+    </div>
+
+
+
+    <div id="div2" onclick="dummyEvent()">
+      <div id="completion_Container">
+        <label id="button_Mass" class="button">
+          <span id="check_Mass" class="check" onclick="toggleButtonPlot('#check_Mass','Mass')" ></span>
+        </label>
+
+
+      </div>
+      <div id="bar_Container"></div>
+      <div id="Pbar_Container"></div>
+    </div>
+
+
+
+    <div id="div3">
+      <div id="flowNPressure_Container">
+        <label id="button_AirFlow" class="button">
+          <span id="check_AirFlow" class="check"  onclick="toggleButtonPlot('#check_AirFlow','airFlow')"></span>
+        </label>
+        <label id="button_P1" class="button">
+          <span id="check_P1" class="check" onclick="toggleButtonPlot('#check_P1','P1')"></span>
+        </label>
+        <label id="button_P2" class="button">
+          <span id="check_P2" class="check" onclick="toggleButtonPlot('#check_P2','P2')"></span>
+        </label>
+        <label id="button_PressureDrop" class="button" >
+          <span id="check_PressureDrop" class="check" onclick="toggleButtonPlot('#check_PressureDrop','pDrop')" ></span>
+        </label>
+
+
+      </div>
+
+
+
+    
+  <div id="linePlot_Container">
+        <div class="clean_buttonContainer">
+          <p>
+            <a href="#" onclick="clearPlots()" >
+              <i id="clean"   class="fa fa-trash-o" data-toggle="tooltip" title="Clear all plots"></i>
+            </a>
+          </p>
+        </div>
+
+        <div class="brush_buttonContainer">
+          <p>
+            <a href="#" onclick="toggleUpdates()" >
+              <i id="clean"   class="fa fa-clock-o" data-toggle="tooltip" title="Stop data updating and enable brushing."></i>
+            </a>
+          </p>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+
+    /*Get global variables with dimensions of the different parts, set in CSS. */
+    let ele0 = document.getElementById("div1");
+    let H = parseInt(ele0.clientHeight);
+    let W = parseInt(ele0.clientWidth);
+
+    let ele = document.getElementById("gasifier_Container");
+    let height = parseInt(ele.clientHeight);
+    let width = parseInt(ele.clientWidth);
+    
+
+    let rawData;
+
+    let tmp = document.getElementById("linePlot_Container");
+    let plotHeight = parseInt(tmp.clientHeight);
+    let plotWidth = parseInt(tmp.clientWidth);
+
+
+    let ele1 = document.getElementById("completion_Container");
+    let completionHeight = parseInt(ele1.clientHeight);
+    let completionWidth = parseInt(ele1.clientWidth);
+
+    let ele2 = document.getElementById("bar_Container");
+    let barHeight = parseInt(ele2.clientHeight);
+    let barWidth = parseInt(ele2.clientWidth);
+
+    let ele3 = document.getElementById("Pbar_Container");
+    let PbarHeight = parseInt(ele3.clientHeight);
+    let PbarWidth = parseInt(ele3.clientWidth);
+
+    let ele4 = document.getElementById("flowNPressure_Container");
+    let flowNPressureHeight = parseInt(ele4.clientHeight);
+    let flowNPressureWidth = parseInt(ele4.clientWidth);
+
+
+    /*Loadables */
+    var set= "resources/dat.csv";
+    var image= "resources/gasifier_labeled.svg";
+
+    var updateProc;
+
+  </script>
+
+
+  <script type="text/javascript">
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', afterLoaded);
+    } else {
+      //The DOMContentLoaded event has already fired. Just run the code.
+      afterLoaded();
+    }
+
+    function afterLoaded() {
+
+
+
+      let svgScatterplot;
+      let scatterCircles;
+      let gasifierContainer;
+
+
+
+
+      d3.xml(image)
+        .then(data => {
+          d3.select("#gasifier_Container").node().append(data.documentElement)
+
+          d3.csv(set + '?' + Math.floor(Math.random() * 1000))
+            .then((data) => {
+              rawData = data;
+              pressureDrop = computePressureDrop(data);
+              console.log("hey", data)
+
+              setupVis(data.slice(0,data.length-1));
+
+            })
+
+        });
+         updateProc=window.setInterval(function(){
+        update();
+      }, 5000);
+
+
+    }
+  </script>
+
+
+
+</body>
+
+</html>
