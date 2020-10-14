@@ -97,4 +97,4 @@ Using this, the user may select a time lapse. The whole
 visualization will then be updated to show the average values
 in the selected window.
 
-![brushing (1)](https://user-images.githubusercontent.com/40301612/96045123-6ee83a00-0e69-11eb-951a-bb9a1c91a7eb.png)
+![brushing](https://user-images.githubusercontent.com/40301612/96045420-d43c2b00-0e69-11eb-8847-325bae7fa6b7.png)
