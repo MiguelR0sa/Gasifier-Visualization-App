@@ -44,6 +44,8 @@ gasification run may take a couple of hours, delays between
 transmissions should not be cumbersome to the user.
 
 
+![DataPathFlowchart](https://user-images.githubusercontent.com/40301612/96045134-714a9400-0e69-11eb-92b9-a41054494905.png)
+
 
 
 B. Solution
@@ -61,6 +63,8 @@ rising when going from the pyrolysis zone into the
 combustion zone and then decreasing when nearing the
 reduction zone.
 
+
+![app (1)](https://user-images.githubusercontent.com/40301612/96045127-70196700-0e69-11eb-9774-7bda930b708f.PNG)
 
 The tool magnifies this gradient by coloring the areas
 pertinent to each temperature sensor with a color intensity
@@ -92,3 +96,5 @@ functionality of the scatter plot, shown below.
 Using this, the user may select a time lapse. The whole
 visualization will then be updated to show the average values
 in the selected window.
+
+![brushing (1)](https://user-images.githubusercontent.com/40301612/96045123-6ee83a00-0e69-11eb-951a-bb9a1c91a7eb.png)
