@@ -49,6 +49,7 @@ transmissions should not be cumbersome to the user.
 
 
 B. Solution
+
 The solution developed, shown below, consists of a
 dashboard containing an illustration of the gasifier, delimited
 by the areas monitored by each temperature sensor, three
